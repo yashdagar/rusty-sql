@@ -1,6 +1,11 @@
 use std::io::{Write, stdin, stdout};
 use clearscreen::clear;
 
+
+mod sql;
+use sql::tokenizer::Tokenizer;
+use sql::token::Token;
+
 fn main() {
     let _ = clear();
     println!("Simple Rust DB (v0.1.0)");
@@ -38,7 +43,11 @@ fn main() {
             "\\c" | "clear" => {
                 let _ = clear();
             }
-            _ => {}
+            _ => {
+                let tokenizer = Tokenizer::new(input);
+                let tokens: Vec<Token> = tokenizer.tokenize(input);
+                println!("{:?}", tokens);
+            }
         }
 
         // just make a dbms here now :)
