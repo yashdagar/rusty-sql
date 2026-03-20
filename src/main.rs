@@ -3,7 +3,7 @@ use clearscreen::clear;
 
 
 mod sql;
-use sql::tokenizer::Tokenizer;
+use sql::tokenizer::{Tokenizer, TokenizeError};
 use sql::token::Token;
 
 fn main() {
@@ -44,12 +44,16 @@ fn main() {
                 let _ = clear();
             }
             _ => {
-                let tokenizer = Tokenizer::new(input);
-                let tokens: Vec<Token> = tokenizer.tokenize(input);
-                println!("{:?}", tokens);
+                let result:Result<Vec<Token>,TokenizeError> = Tokenizer::new(input).collect();
+                match result {
+                    Ok(res) => {
+                        println!("{:?}", res);
+                    },
+                    Err(e) => {
+                        println!("Error while parsing the input, {:?}", e);
+                    }
+                }
             }
         }
-
-        // just make a dbms here now :)
     }
 }

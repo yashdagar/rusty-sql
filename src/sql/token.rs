@@ -28,6 +28,7 @@ pub enum Token {
 
     // Operators
     Eq,
+    EqEq,
     NotEq,
     Lt,
     Gt,
